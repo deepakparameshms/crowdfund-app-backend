@@ -21,6 +21,11 @@ public class UserService implements UserDetailsService {
 				.orElseThrow(() -> new UserNotFoundException());
 	}
 	
+	public User loadUserByEmail(String email) throws UsernameNotFoundException {
+		return userRepository.findByEmail(email)
+				.orElseThrow(() -> new UserNotFoundException());
+	}
+	
 	public User findById(String id) {
 		return userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException());
