@@ -4,6 +4,10 @@ import com.auth.jwtserver.document.Project;
 import com.auth.jwtserver.document.User;
 import com.auth.jwtserver.dto.ProjectDto;
 import com.auth.jwtserver.dto.ProjectResponseDto;
+import com.auth.jwtserver.exception.BadInputException;
+import com.auth.jwtserver.exception.ProjectNotFoundException;
+import com.auth.jwtserver.exception.UpdateFailedException;
+import com.auth.jwtserver.exception.UserNotFoundException;
 import com.auth.jwtserver.repository.ProjectRepository;
 import com.auth.jwtserver.repository.UserRepository;
 
@@ -24,7 +28,8 @@ public class ProjectService {
 
     public ProjectResponseDto createProject(ProjectDto projectDto, String founderId) {
         
-        User founder = userRepository.findById(founderId).orElseThrow(() -> new RuntimeException("Founder not found"));
+        validateProjectDto(projectDto);
+        User founder = userRepository.findById(founderId).orElseThrow(() -> new UserNotFoundException());
 
         Project project = new Project();
         project.setName(projectDto.getName());
@@ -41,8 +46,12 @@ public class ProjectService {
         project.setAskAmount(projectDto.getAskAmount());
         project.setFounder(founder);
         
-        Project savedProject = projectRepository.save(project);
-        return convertToDto(savedProject);
+        try{
+            Project savedProject = projectRepository.save(project);
+            return convertToDto(savedProject);
+        } catch (Exception e){
+            throw new UpdateFailedException("Failed to create the Project", e);
+        }
     }
 
     public List<ProjectResponseDto> getAllProjects() {
@@ -60,10 +69,13 @@ public class ProjectService {
     public ProjectResponseDto getProjectById(String id) {
         return projectRepository.findById(id)
                 .map(this::convertToDto)
-                .orElse(null);
+                .orElseThrow(() -> new ProjectNotFoundException("Project with Id: " + id + " not found"));
     }
 
     public ProjectResponseDto updateProject(String id, ProjectDto projectDto) {
+        
+        validateProjectDto(projectDto);
+
         return projectRepository.findById(id)
                 .map(project -> {
                     project.setName(projectDto.getName());
@@ -78,8 +90,12 @@ public class ProjectService {
                     project.setLinkedIn(projectDto.getLinkedIn());
                     project.setLogoUrl(projectDto.getLogoUrl());
                     project.setAskAmount(projectDto.getAskAmount());
-                    return convertToDto(projectRepository.save(project));
-                }).orElse(null);
+                    try{
+                        return convertToDto(projectRepository.save(project));
+                    } catch (Exception e){
+                        throw new UpdateFailedException("Failed to update the project with ID: " +id, e);
+                    }
+                }).orElseThrow(() -> new ProjectNotFoundException("Project with Id: " + id + " not found"));
     }
 
     public void deleteProject(String id) {
@@ -105,5 +121,48 @@ public class ProjectService {
         projectResponseDto.setDonations(project.getDonations());
         projectResponseDto.setAchieved(project.isAchieved());
         return projectResponseDto;
+    }
+
+    private void validateProjectDto(ProjectDto projectDto) {
+        if (projectDto.getName() == null || projectDto.getName().isEmpty()) {
+            throw new BadInputException("Project name cannot be null or empty");
+        }
+        
+        if (projectDto.getDescription() == null || projectDto.getDescription().isEmpty()) {
+            throw new BadInputException("Project description cannot be null or empty");
+        }
+
+        if (projectDto.getCategory() == null || projectDto.getCategory().isEmpty()) {
+            throw new BadInputException("Project category cannot be null or empty");
+        }
+
+        if (projectDto.getVision() == null || projectDto.getVision().isEmpty()) {
+            throw new BadInputException("Project vision cannot be null or empty");
+        }
+
+        if (projectDto.getProblemStatement() == null || projectDto.getProblemStatement().isEmpty()) {
+            throw new BadInputException("Project problem statement cannot be null or empty");
+        }
+
+        if (projectDto.getSolution() == null || projectDto.getSolution().isEmpty()) {
+            throw new BadInputException("Project solution cannot be null or empty");
+        }
+
+        if (projectDto.getWebsite() == null || projectDto.getWebsite().isEmpty()) {
+            throw new BadInputException("Project website cannot be null or empty");
+        }
+
+        if (projectDto.getEmail() == null || projectDto.getEmail().isEmpty()) {
+            throw new BadInputException("Project email cannot be null or empty");
+        }
+
+        if (projectDto.getLogoUrl() == null || projectDto.getLogoUrl().isEmpty()) {
+            throw new BadInputException("Project logo URL cannot be null or empty");
+        }
+
+        if (projectDto.getAskAmount() <= 0) {
+            throw new BadInputException("Project ask amount cannot be less than or equal to zero");
+        }
+
     }
 }

@@ -54,4 +54,19 @@ public class GlobalExceptionHandler {
         return ResponseBuilder.build(HttpStatus.NOT_FOUND, "Account Doesn't Exist", ex.getMessage(), null);
     }
     
+    @ExceptionHandler(ProjectNotFoundException.class)
+    public ResponseEntity<Object> handleProjectNotFoundException(ProjectNotFoundException ex) {
+        return ResponseBuilder.build(HttpStatus.NOT_FOUND, "Project Doesn't Exist", ex.getMessage(), null);
+    }
+
+    @ExceptionHandler(UpdateFailedException.class)
+    public ResponseEntity<Object> handleUpdateFailedException(UpdateFailedException ex) {
+        return ResponseBuilder.build(HttpStatus.NOT_MODIFIED, "Update Failed", ex.getMessage(), null);
+    }
+
+    @ExceptionHandler(BadInputException.class)
+    public ResponseEntity<Object> handleBadInputException(BadInputException ex) {
+        return ResponseBuilder.build(HttpStatus.BAD_REQUEST, "Bad Input", ex.getMessage(), null);
+    }
+
 }
