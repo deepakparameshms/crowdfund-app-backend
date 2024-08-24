@@ -3,6 +3,7 @@ package com.auth.jwtserver.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,7 @@ public class ProjectController {
 
     @Operation(summary = "Get an User's Projects by userId")
     @GetMapping("/user/{userId}")
+    @PreAuthorize("#user.id == #userId")
     @SecurityRequirement(name = "bearerAuthToken")
     public ResponseEntity<Object> getUserProjects(@AuthenticationPrincipal User user,@PathVariable String userId){
         List<ProjectResponseDto> projectResponseDtoList = projectService.getUserProjects(userId);
