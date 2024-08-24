@@ -15,4 +15,4 @@ services:
       - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=rootpass1
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      - MONGODB_REPLICA_SET_NAME=rs1
+      - MONGODB_REPLICA_SET_NAME=rs0

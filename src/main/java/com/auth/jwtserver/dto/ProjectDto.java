@@ -49,4 +49,6 @@ public class ProjectDto {
     @NotBlank
     private double askAmount;
     
+    @NotBlank
+    private double currentAmount;
 }

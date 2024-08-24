@@ -20,8 +20,8 @@ public class ProjectResponseDto {
     private String instagram;
     private String linkedIn;
     private String logoUrl;
-    private double ask;
-    private double current;
+    private double askAmount;
+    private double currentAmount;
     private double donations;
     private boolean isAchieved;
 }

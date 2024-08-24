@@ -100,8 +100,8 @@ public class ProjectService {
         projectResponseDto.setInstagram(project.getInstagram());
         projectResponseDto.setLinkedIn(project.getLinkedIn());
         projectResponseDto.setLogoUrl(project.getLogoUrl());
-        projectResponseDto.setAsk(project.getAskAmount());
-        projectResponseDto.setCurrent(project.getCurrentAmount());
+        projectResponseDto.setAskAmount(project.getAskAmount());
+        projectResponseDto.setCurrentAmount(project.getCurrentAmount());
         projectResponseDto.setDonations(project.getDonations());
         projectResponseDto.setAchieved(project.isAchieved());
         return projectResponseDto;
