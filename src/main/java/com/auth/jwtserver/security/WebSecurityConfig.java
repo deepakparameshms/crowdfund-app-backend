@@ -50,6 +50,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers(
                                 		"/api/auth/**",
+                                        "/api/project/**",
                                 		"/v3/api-docs/**",
                                 		"/api/swagger-ui/**",
                                 		"/api/docs/**"
