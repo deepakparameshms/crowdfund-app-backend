@@ -2,6 +2,7 @@ package com.auth.jwtserver.service;
 
 import com.auth.jwtserver.document.Project;
 import com.auth.jwtserver.document.User;
+import com.auth.jwtserver.dto.LocationDto;
 import com.auth.jwtserver.dto.ProjectDto;
 import com.auth.jwtserver.dto.ProjectResponseDto;
 import com.auth.jwtserver.exception.BadInputException;
@@ -46,6 +47,13 @@ public class ProjectService {
         project.setAskAmount(projectDto.getAskAmount());
         project.setFounder(founder);
         
+        LocationDto locationDetails = new LocationDto();
+        locationDetails.setCountryName(projectDto.getLocation().getCountryName());
+        locationDetails.setCurrency(projectDto.getLocation().getCurrency());
+        locationDetails.setCurrencyCode(projectDto.getLocation().getCurrencyCode());
+        locationDetails.setFlag(projectDto.getLocation().getFlag());
+        project.setLocation(locationDetails);
+
         try{
             Project savedProject = projectRepository.save(project);
             return convertToDto(savedProject);
@@ -121,6 +129,14 @@ public class ProjectService {
         projectResponseDto.setCurrentAmount(project.getCurrentAmount());
         projectResponseDto.setDonations(project.getDonations());
         projectResponseDto.setAchieved(project.isAchieved());
+
+        LocationDto locationDetails = new LocationDto();
+        locationDetails.setCountryName(project.getLocation().getCountryName());
+        locationDetails.setCurrency(project.getLocation().getCurrency());
+        locationDetails.setCurrencyCode(project.getLocation().getCurrencyCode());
+        locationDetails.setFlag(project.getLocation().getFlag());
+
+        projectResponseDto.setLocation(locationDetails);
         return projectResponseDto;
     }
 
@@ -159,6 +175,10 @@ public class ProjectService {
 
         if (projectDto.getLogoUrl() == null || projectDto.getLogoUrl().isEmpty()) {
             throw new BadInputException("Project logo URL cannot be null or empty");
+        }
+
+        if (projectDto.getLocation() == null) {
+            throw new BadInputException("Project location details are missing");
         }
 
         if (projectDto.getAskAmount() <= 10) {

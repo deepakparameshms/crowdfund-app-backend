@@ -51,4 +51,6 @@ public class ProjectDto {
     
     @NotBlank
     private double currentAmount;
+
+    private LocationDto location;
 }

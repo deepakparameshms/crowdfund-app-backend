@@ -3,6 +3,8 @@ package com.auth.jwtserver.document;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.auth.jwtserver.dto.LocationDto;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,7 +28,7 @@ public class Project {
     @Size(min = 3, max = 50)
     private String name;
 
-    private boolean isVerified = true;
+    private boolean verified = true;
 
     @NotBlank
     @Size(min = 3, max = 5000)
@@ -67,7 +69,9 @@ public class Project {
     
     private double donations = 0;
     
-    private boolean isAchieved = false;
+    private boolean achieved = false;
+
+    private LocationDto location;
 
     public User getFounder() {
         return founder;

@@ -58,7 +58,11 @@ public class TransactionService {
         transaction.setDate(new Date());
 
         if(transaction.isPaid()){
-            project.setCurrentAmount(project.getCurrentAmount() + transaction.getAmount());
+            double currentAmount = project.getCurrentAmount() + transaction.getAmount();
+            project.setCurrentAmount(currentAmount);
+            if(currentAmount >= project.getAskAmount()){
+                project.setAchieved(true);
+            }
             project.setDonations(project.getDonations() + 1);
         }
 
