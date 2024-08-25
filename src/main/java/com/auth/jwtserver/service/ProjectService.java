@@ -98,6 +98,7 @@ public class ProjectService {
                 }).orElseThrow(() -> new ProjectNotFoundException("Project with Id: " + id + " not found"));
     }
 
+
     public void deleteProject(String id) {
         projectRepository.deleteById(id);
     }
@@ -160,8 +161,8 @@ public class ProjectService {
             throw new BadInputException("Project logo URL cannot be null or empty");
         }
 
-        if (projectDto.getAskAmount() <= 0) {
-            throw new BadInputException("Project ask amount cannot be less than or equal to zero");
+        if (projectDto.getAskAmount() <= 10) {
+            throw new BadInputException("Project ask amount should be atlease 10");
         }
 
     }

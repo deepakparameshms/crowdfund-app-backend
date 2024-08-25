@@ -1,23 +1,45 @@
 package com.auth.jwtserver.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth.jwtserver.document.User;
+import com.auth.jwtserver.dto.TransactionDto;
+import com.auth.jwtserver.dto.TransactionResponseDto;
+import com.auth.jwtserver.service.TransactionService;
 import com.auth.jwtserver.utility.ResponseBuilder;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
 public class TransactionController {
-    
+    @Autowired
+    private TransactionService transactionService;
 
     @Operation(summary ="Records a Payment transaction")
     @PostMapping("/payment")
-    public ResponseEntity<Object> recordPayment(){
-        
-        return ResponseBuilder.build(null, null, "Payment Recorded", getClass());
+    @SecurityRequirement(name = "bearerAuthToken")
+    public ResponseEntity<Object> recordPayment(@AuthenticationPrincipal User user, @RequestBody TransactionDto transactionDto){
+        TransactionResponseDto responseDto = transactionService.recordPayment(transactionDto);
+        return ResponseBuilder.build(HttpStatus.CREATED, null, "Payment Successful" , responseDto);
+    }
+
+    @Operation(summary ="Gets all transaction of a project")
+    @GetMapping("/project/{projectId}")
+    @SecurityRequirement(name = "bearerAuthToken")
+    public ResponseEntity<Object> getAllTransactions(@AuthenticationPrincipal User user, @PathVariable String projectId){
+        List<TransactionResponseDto> transactions = transactionService.getProjectTransaction(projectId);
+        return ResponseBuilder.build(HttpStatus.OK, null, "All Transactions", transactions);
     }
 }
