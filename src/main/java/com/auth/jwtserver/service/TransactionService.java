@@ -106,12 +106,12 @@ public class TransactionService {
         responseDto.setProjectId(transaction.getProject().getId());
         responseDto.setPaymentMode(transaction.getPaymentMode());
         responseDto.setTransactionId(transaction.getTransactionId());
-        transaction.setPaymentId(transaction.getPaymentId());
-        transaction.setSignature(transaction.getSignature());
-        transaction.setPaymentService(transaction.getPaymentService());
-        transaction.setPaymentServiceMessage(transaction.getPaymentService());
-        transaction.setPaymentMode(transaction.getPaymentMode());
-        transaction.setCurrencyType(transaction.getCurrencyType());
+        responseDto.setPaymentId(transaction.getPaymentId());
+        responseDto.setSignature(transaction.getSignature());
+        responseDto.setPaymentService(transaction.getPaymentService());
+        responseDto.setPaymentServiceMessage(transaction.getPaymentService());
+        responseDto.setPaymentMode(transaction.getPaymentMode());
+        responseDto.setCurrencyType(transaction.getCurrencyType());
         responseDto.setDate(transaction.getDate());
         return responseDto;
     }

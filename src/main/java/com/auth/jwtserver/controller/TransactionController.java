@@ -38,8 +38,16 @@ public class TransactionController {
     @Operation(summary ="Gets all transaction of a project")
     @GetMapping("/project/{projectId}")
     @SecurityRequirement(name = "bearerAuthToken")
-    public ResponseEntity<Object> getAllTransactions(@AuthenticationPrincipal User user, @PathVariable String projectId){
+    public ResponseEntity<Object> getProjectTransactions(@AuthenticationPrincipal User user, @PathVariable String projectId){
         List<TransactionResponseDto> transactions = transactionService.getProjectTransaction(projectId);
-        return ResponseBuilder.build(HttpStatus.OK, null, "All Transactions", transactions);
+        return ResponseBuilder.build(HttpStatus.OK, null, "Project's Transactions", transactions);
+    }
+
+    @Operation(summary ="Gets all transaction of a project")
+    @GetMapping("/user/{userId}")
+    @SecurityRequirement(name = "bearerAuthToken")
+    public ResponseEntity<Object> getUserTransactions(@AuthenticationPrincipal User user, @PathVariable String userId){
+        List<TransactionResponseDto> transactions = transactionService.getUserTransaction(userId);
+        return ResponseBuilder.build(HttpStatus.OK, null, "User's Transactions", transactions);
     }
 }
