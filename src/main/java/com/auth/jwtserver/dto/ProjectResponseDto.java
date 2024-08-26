@@ -24,5 +24,6 @@ public class ProjectResponseDto {
     private double currentAmount;
     private double donations;
     private boolean isAchieved;
+    private String founderName;
     private LocationDto location;
 }

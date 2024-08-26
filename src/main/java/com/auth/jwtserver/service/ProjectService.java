@@ -56,7 +56,7 @@ public class ProjectService {
 
         try{
             Project savedProject = projectRepository.save(project);
-            return convertToDto(savedProject);
+            return convertToResponseDto(savedProject);
         } catch (Exception e){
             throw new UpdateFailedException("Failed to create the Project", e);
         }
@@ -64,19 +64,19 @@ public class ProjectService {
 
     public List<ProjectResponseDto> getAllProjects() {
         return projectRepository.findAll().stream()
-                .map(this::convertToDto)
+                .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
     }
 
     public List<ProjectResponseDto> getUserProjects(String userId) {
         return projectRepository.findByFounderId(userId).stream()
-                .map(this::convertToDto)
+                .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
     }
 
     public ProjectResponseDto getProjectById(String id) {
         return projectRepository.findById(id)
-                .map(this::convertToDto)
+                .map(this::convertToResponseDto)
                 .orElseThrow(() -> new ProjectNotFoundException("Project with Id: " + id + " not found"));
     }
 
@@ -99,7 +99,7 @@ public class ProjectService {
                     project.setLogoUrl(projectDto.getLogoUrl());
                     project.setAskAmount(projectDto.getAskAmount());
                     try{
-                        return convertToDto(projectRepository.save(project));
+                        return convertToResponseDto(projectRepository.save(project));
                     } catch (Exception e){
                         throw new UpdateFailedException("Failed to update the project with ID: " +id, e);
                     }
@@ -111,7 +111,7 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    private ProjectResponseDto convertToDto(Project project) {
+    private ProjectResponseDto convertToResponseDto(Project project) {
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
         projectResponseDto.setId(project.getId());
         projectResponseDto.setName(project.getName());
@@ -129,6 +129,7 @@ public class ProjectService {
         projectResponseDto.setCurrentAmount(project.getCurrentAmount());
         projectResponseDto.setDonations(project.getDonations());
         projectResponseDto.setAchieved(project.isAchieved());
+        projectResponseDto.setFounderName(project.getFounder().getUsername());
 
         LocationDto locationDetails = new LocationDto();
         locationDetails.setCountryName(project.getLocation().getCountryName());

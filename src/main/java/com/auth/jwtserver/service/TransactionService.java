@@ -103,6 +103,7 @@ public class TransactionService {
         responseDto.setPaid(transaction.isPaid());
         responseDto.setAmount(transaction.getAmount());
         responseDto.setUserId(transaction.getUser().getId());
+        responseDto.setUserName(transaction.getUser().getUsername());
         responseDto.setProjectId(transaction.getProject().getId());
         responseDto.setPaymentMode(transaction.getPaymentMode());
         responseDto.setTransactionId(transaction.getTransactionId());

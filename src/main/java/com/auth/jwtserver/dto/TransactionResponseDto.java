@@ -18,6 +18,8 @@ public class TransactionResponseDto {
     @NotBlank
     private String userId;
     @NotBlank
+    private String userName;
+    @NotBlank
     private String projectId;
     @NotBlank
     private String transactionId;
