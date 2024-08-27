@@ -43,7 +43,7 @@ public class TransactionController {
         return ResponseBuilder.build(HttpStatus.OK, null, "Project's Transactions", transactions);
     }
 
-    @Operation(summary ="Gets all transaction of a project")
+    @Operation(summary ="Gets all transaction of an user")
     @GetMapping("/user/{userId}")
     @SecurityRequirement(name = "bearerAuthToken")
     public ResponseEntity<Object> getUserTransactions(@AuthenticationPrincipal User user, @PathVariable String userId){

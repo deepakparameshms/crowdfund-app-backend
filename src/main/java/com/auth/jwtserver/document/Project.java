@@ -28,7 +28,7 @@ public class Project {
     @Size(min = 3, max = 50)
     private String name;
 
-    private boolean verified = true;
+    private boolean verified = false;
 
     @NotBlank
     @Size(min = 3, max = 5000)

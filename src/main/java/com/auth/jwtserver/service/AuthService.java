@@ -19,10 +19,11 @@ import com.auth.jwtserver.exception.IncorrectLoginCredentialsException;
 import com.auth.jwtserver.exception.InvalidTokenException;
 import com.auth.jwtserver.repository.RefreshTokenRepository;
 import com.auth.jwtserver.repository.UserRepository;
+import com.auth.jwtserver.service.interfaces.IAuthService;
 import com.auth.jwtserver.utility.JwtHelper;
 
 @Service
-public class AuthService {
+public class AuthService implements IAuthService {
 
 	@Autowired
     AuthenticationManager authenticationManager;

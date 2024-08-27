@@ -12,6 +12,7 @@ import com.auth.jwtserver.exception.UserNotFoundException;
 import com.auth.jwtserver.repository.ProjectRepository;
 import com.auth.jwtserver.repository.TransactionRepository;
 import com.auth.jwtserver.repository.UserRepository;
+import com.auth.jwtserver.service.interfaces.ITransactionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TransactionService {
+public class TransactionService implements ITransactionService {
     
      @Autowired
     private TransactionRepository transactionRepository;

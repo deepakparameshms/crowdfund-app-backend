@@ -11,6 +11,7 @@ import com.auth.jwtserver.exception.UpdateFailedException;
 import com.auth.jwtserver.exception.UserNotFoundException;
 import com.auth.jwtserver.repository.ProjectRepository;
 import com.auth.jwtserver.repository.UserRepository;
+import com.auth.jwtserver.service.interfaces.IProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProjectService {
+public class ProjectService implements IProjectService{
 
     @Autowired
     private ProjectRepository projectRepository;
