@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.auth.jwtserver.document.enums.TransactionType;
 import com.auth.jwtserver.dto.PaymentInfoDto;
 
 import jakarta.validation.constraints.NotBlank;
@@ -31,7 +32,7 @@ public class Transaction {
     @DBRef
     private Project project;
     @NotBlank
-    private String transactionId;
+    private TransactionType transactionType;
 
     private PaymentInfoDto paymentInfo;
 

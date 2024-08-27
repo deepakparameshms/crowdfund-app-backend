@@ -16,6 +16,7 @@ public class TransactionDto {
     @NotBlank
     private String projectId;
     @NotBlank
-    private String transactionId;
+    private String transactionType;
+
     private PaymentInfoDto paymentInfo;
 }

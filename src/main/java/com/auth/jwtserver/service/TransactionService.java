@@ -3,6 +3,7 @@ package com.auth.jwtserver.service;
 import com.auth.jwtserver.document.Project;
 import com.auth.jwtserver.document.Transaction;
 import com.auth.jwtserver.document.User;
+import com.auth.jwtserver.document.enums.TransactionType;
 import com.auth.jwtserver.dto.PaymentInfoDto;
 import com.auth.jwtserver.dto.TransactionDto;
 import com.auth.jwtserver.dto.TransactionResponseDto;
@@ -50,7 +51,7 @@ public class TransactionService implements ITransactionService {
         transaction.setProject(project);
         transaction.setPaid(transactionDto.isPaid());
         transaction.setAmount(transactionDto.getAmount());
-        transaction.setTransactionId(transactionDto.getTransactionId());
+        transaction.setTransactionType(TransactionType.valueOf(transactionDto.getTransactionType().toUpperCase()));
 
         PaymentInfoDto paymentInfo = new PaymentInfoDto();
         paymentInfo.setPaymentId(transactionDto.getPaymentInfo().getPaymentId());
@@ -111,7 +112,7 @@ public class TransactionService implements ITransactionService {
         responseDto.setUserId(transaction.getUser().getId());
         responseDto.setUserName(transaction.getUser().getUsername());
         responseDto.setProjectId(transaction.getProject().getId());
-        responseDto.setTransactionId(transaction.getTransactionId());
+        responseDto.setTransactionType(transaction.getTransactionType().toString());
 
         PaymentInfoDto paymentInfo = new PaymentInfoDto();
         paymentInfo.setPaymentId(transaction.getPaymentInfo().getPaymentId());
@@ -137,7 +138,7 @@ public class TransactionService implements ITransactionService {
         if(transactionDto.getAmount() <= 10){
             throw new BadInputException("Amount should be greater than 10");
         }
-        if(transactionDto.getTransactionId() == null || transactionDto.getTransactionId().isEmpty()){
+        if(transactionDto.getTransactionType() == null || transactionDto.getTransactionType().toString().isEmpty()){
             throw new BadInputException("Transaction Id is required");
         }
         if(transactionDto.getPaymentInfo().getPaymentId() == null || transactionDto.getPaymentInfo().getPaymentId().isEmpty()){
@@ -155,7 +156,7 @@ public class TransactionService implements ITransactionService {
         if(transactionDto.getPaymentInfo().getPaymentMode() == null || transactionDto.getPaymentInfo().getPaymentMode().isEmpty()){
             throw new BadInputException("Payment Mode is required");
         }
-        if(transactionDto..getPaymentInfo().getCurrencyType() == null || transactionDto.getPaymentInfo().getCurrencyType().isEmpty()){
+        if(transactionDto.getPaymentInfo().getCurrencyType() == null || transactionDto.getPaymentInfo().getCurrencyType().isEmpty()){
             throw new BadInputException("Currency Type is required");
         }
     }

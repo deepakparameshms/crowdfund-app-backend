@@ -2,6 +2,8 @@ package com.auth.jwtserver.dto;
 
 import java.util.Date;
 
+import com.auth.jwtserver.document.enums.TransactionType;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +24,7 @@ public class TransactionResponseDto {
     @NotBlank
     private String projectId;
     @NotBlank
-    private String transactionId;
+    private String transactionType;
 
     private PaymentInfoDto paymentInfo;
 

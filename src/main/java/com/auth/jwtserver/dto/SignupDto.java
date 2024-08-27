@@ -1,5 +1,7 @@
 package com.auth.jwtserver.dto;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,4 +25,5 @@ public class SignupDto {
     @Size(min = 6, max = 60)
     private String password;
 	
+    private List<String> roles;
 }

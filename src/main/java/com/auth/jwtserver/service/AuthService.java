@@ -1,5 +1,8 @@
 package com.auth.jwtserver.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.auth.jwtserver.document.RefreshToken;
 import com.auth.jwtserver.document.User;
+import com.auth.jwtserver.document.enums.Role;
 import com.auth.jwtserver.dto.LoginDto;
 import com.auth.jwtserver.dto.SignupDto;
 import com.auth.jwtserver.dto.TokenDto;
@@ -46,6 +50,11 @@ public class AuthService implements IAuthService {
     @Transactional
     public TokenDto signup(SignupDto dto) {
         User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()));
+        
+        // Conver strings to Role enum
+        List<Role> roles = dto.getRoles().stream().map(Role::valueOf).collect(Collectors.toList());
+        
+        user.setRoles(roles);
         userRepository.save(user);
         
         RefreshToken refreshToken = new RefreshToken();
