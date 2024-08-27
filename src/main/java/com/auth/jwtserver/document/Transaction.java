@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.auth.jwtserver.dto.PaymentInfoDto;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,18 +33,7 @@ public class Transaction {
     @NotBlank
     private String transactionId;
 
-    @NotBlank
-    private String paymentId;
-    @NotBlank
-    private String signature;
-    @NotBlank
-    private String paymentService;
-    @NotBlank
-    private String paymentServiceMessage;
-    @NotBlank
-    private String paymentMode;
-    @NotBlank
-    private String currencyType;
+    private PaymentInfoDto paymentInfo;
 
     @NotBlank
     private Date date;

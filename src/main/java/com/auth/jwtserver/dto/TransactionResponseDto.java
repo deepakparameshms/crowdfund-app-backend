@@ -23,18 +23,9 @@ public class TransactionResponseDto {
     private String projectId;
     @NotBlank
     private String transactionId;
-    @NotBlank
-    private String paymentId;
-    @NotBlank
-    private String signature;
-    @NotBlank
-    private String paymentService;
-    @NotBlank
-    private String paymentServiceMessage;
-    @NotBlank
-    private String paymentMode;
-    @NotBlank
-    private String currencyType;
+
+    private PaymentInfoDto paymentInfo;
+
     @NotBlank
     private Date date;
 }

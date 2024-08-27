@@ -3,6 +3,7 @@ package com.auth.jwtserver.service;
 import com.auth.jwtserver.document.Project;
 import com.auth.jwtserver.document.Transaction;
 import com.auth.jwtserver.document.User;
+import com.auth.jwtserver.dto.PaymentInfoDto;
 import com.auth.jwtserver.dto.TransactionDto;
 import com.auth.jwtserver.dto.TransactionResponseDto;
 import com.auth.jwtserver.exception.BadInputException;
@@ -50,12 +51,16 @@ public class TransactionService implements ITransactionService {
         transaction.setPaid(transactionDto.isPaid());
         transaction.setAmount(transactionDto.getAmount());
         transaction.setTransactionId(transactionDto.getTransactionId());
-        transaction.setPaymentId(transactionDto.getPaymentId());
-        transaction.setSignature(transactionDto.getSignature());
-        transaction.setPaymentService(transactionDto.getPaymentService());
-        transaction.setPaymentServiceMessage(transactionDto.getPaymentServiceMessage());
-        transaction.setPaymentMode(transactionDto.getPaymentMode());
-        transaction.setCurrencyType(transactionDto.getCurrencyType());
+
+        PaymentInfoDto paymentInfo = new PaymentInfoDto();
+        paymentInfo.setPaymentId(transactionDto.getPaymentInfo().getPaymentId());
+        paymentInfo.setSignature(transactionDto.getPaymentInfo().getSignature());
+        paymentInfo.setPaymentService(transactionDto.getPaymentInfo().getPaymentService());
+        paymentInfo.setPaymentServiceMessage(transactionDto.getPaymentInfo().getPaymentServiceMessage());
+        paymentInfo.setPaymentMode(transactionDto.getPaymentInfo().getPaymentMode());
+        paymentInfo.setCurrencyType(transactionDto.getPaymentInfo().getCurrencyType());
+
+        transaction.setPaymentInfo(paymentInfo);
         transaction.setDate(new Date());
 
         if(transaction.isPaid()){
@@ -106,14 +111,18 @@ public class TransactionService implements ITransactionService {
         responseDto.setUserId(transaction.getUser().getId());
         responseDto.setUserName(transaction.getUser().getUsername());
         responseDto.setProjectId(transaction.getProject().getId());
-        responseDto.setPaymentMode(transaction.getPaymentMode());
         responseDto.setTransactionId(transaction.getTransactionId());
-        responseDto.setPaymentId(transaction.getPaymentId());
-        responseDto.setSignature(transaction.getSignature());
-        responseDto.setPaymentService(transaction.getPaymentService());
-        responseDto.setPaymentServiceMessage(transaction.getPaymentService());
-        responseDto.setPaymentMode(transaction.getPaymentMode());
-        responseDto.setCurrencyType(transaction.getCurrencyType());
+
+        PaymentInfoDto paymentInfo = new PaymentInfoDto();
+        paymentInfo.setPaymentId(transaction.getPaymentInfo().getPaymentId());
+        paymentInfo.setSignature(transaction.getPaymentInfo().getSignature());
+        paymentInfo.setPaymentService(transaction.getPaymentInfo().getPaymentService());
+        paymentInfo.setPaymentServiceMessage(transaction.getPaymentInfo().getPaymentServiceMessage());
+        paymentInfo.setPaymentMode(transaction.getPaymentInfo().getPaymentMode());
+        paymentInfo.setCurrencyType(transaction.getPaymentInfo().getCurrencyType());
+
+        responseDto.setPaymentInfo(paymentInfo);
+
         responseDto.setDate(transaction.getDate());
         return responseDto;
     }
@@ -131,22 +140,22 @@ public class TransactionService implements ITransactionService {
         if(transactionDto.getTransactionId() == null || transactionDto.getTransactionId().isEmpty()){
             throw new BadInputException("Transaction Id is required");
         }
-        if(transactionDto.getPaymentId() == null || transactionDto.getPaymentId().isEmpty()){
+        if(transactionDto.getPaymentInfo().getPaymentId() == null || transactionDto.getPaymentInfo().getPaymentId().isEmpty()){
             throw new BadInputException("Payment Id is required");
         }
-        if(transactionDto.getSignature() == null || transactionDto.getSignature().isEmpty()){
+        if(transactionDto.getPaymentInfo().getSignature() == null || transactionDto.getPaymentInfo().getSignature().isEmpty()){
             throw new BadInputException("Signature is required");
         }
-        if(transactionDto.getPaymentService() == null || transactionDto.getPaymentService().isEmpty()){
+        if(transactionDto.getPaymentInfo().getPaymentService() == null || transactionDto.getPaymentInfo().getPaymentService().isEmpty()){
             throw new BadInputException("Payment Service is required");
         }
-        if(transactionDto.getPaymentServiceMessage() == null || transactionDto.getPaymentServiceMessage().isEmpty()){
+        if(transactionDto.getPaymentInfo().getPaymentServiceMessage() == null || transactionDto.getPaymentInfo().getPaymentServiceMessage().isEmpty()){
             throw new BadInputException("Payment Service Message is required");
         }
-        if(transactionDto.getPaymentMode() == null || transactionDto.getPaymentMode().isEmpty()){
+        if(transactionDto.getPaymentInfo().getPaymentMode() == null || transactionDto.getPaymentInfo().getPaymentMode().isEmpty()){
             throw new BadInputException("Payment Mode is required");
         }
-        if(transactionDto.getCurrencyType() == null || transactionDto.getCurrencyType().isEmpty()){
+        if(transactionDto..getPaymentInfo().getCurrencyType() == null || transactionDto.getPaymentInfo().getCurrencyType().isEmpty()){
             throw new BadInputException("Currency Type is required");
         }
     }
